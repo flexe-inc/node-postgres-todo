@@ -1,0 +1,26 @@
+# Starter template Pod for creating Pod for running unit test against
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    repo: maui
+    jenkins-job: pr-tests
+spec:
+  nodeSelector:
+    jenkins: slave
+  containers:
+  # Probably add more containers here
+  - name: db
+    image: postgres:9.6
+    resources:
+      requests:
+        memory: 200Mi
+    volumeMounts:
+      - mountPath: /var/lib/postgresql/data
+        name: db
+    command:
+      - cat
+    tty: true
+  volumes:
+    - name: db
+      emptyDir: {}
